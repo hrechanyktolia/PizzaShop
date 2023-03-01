@@ -1,0 +1,18 @@
+.ninja-pizza {
+  border-top: 1px solid lavender;
+  padding: 25px 0;
+
+  &__text {
+    width: 90%;
+    margin: 0 auto;
+
+    span {
+      color: gray;
+
+      a {
+        //text-decoration: none;
+        color: gray;
+      }
+    }
+  }
+}

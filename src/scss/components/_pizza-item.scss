@@ -1,0 +1,145 @@
+.pizza-block {
+  margin: 10px;
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
+  border: 1px solid lavender;
+  border-radius: 20px;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+
+  @media(max-width: 450px) {
+
+  }
+
+
+  &-wrapper {
+    display: flex;
+    justify-content: center;
+  }
+
+  .img {
+    width: 100%;
+    height: 190px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+  }
+
+  &__title {
+    margin-top: 10px;
+    font-weight: 600;
+    font-size: 20px;
+  }
+
+  &__body {
+    margin-top: 15px;
+
+    b {
+      color: orange;
+      font-size: 15px;
+    }
+    span {
+      opacity: 0.5;
+      font-size: 14px;
+    }
+  }
+
+    &__selector {
+      margin-top: auto;
+      padding-top: 20px;
+
+      .selector-block {
+        display: flex;
+        text-align: center;
+        background-color: #f3f3f3;
+        border-radius: 10px;
+        padding: 5px;
+      }
+
+      ul {
+        display: flex;
+        flex: 1;
+
+        li {
+          padding: 7px;
+          flex: 1;
+          cursor: pointer;
+          font-weight: 600;
+          font-size: 14px;
+          user-select: none;
+
+          &.active {
+            background: #ffffff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+            border-radius: 5px;
+            cursor: auto;
+          }
+        }
+      }
+    }
+  &__bot {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+    h2 {
+      position: relative;
+      font-weight: 500;
+      font-size: 20px;
+
+      span {
+        position: absolute;
+        left: 35px;
+        font-size: 14px;
+        opacity: 0.5;
+      }
+    }
+
+    .add {
+      background: #f3f3f3;
+      padding: 15px 30px;
+      border-radius: 20px;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+
+      &:hover {
+        background-color: #FFC700;
+      }
+    }
+    ul {
+      display: flex;
+      align-items: center;
+
+      li {
+        padding: 0 5px;
+
+        button {
+          display: flex;
+          justify-content: center;
+          width: 45px;
+          height: 45px;
+          border: none;
+          border-radius: 50%;
+          cursor: pointer;
+          font-size: 30px;
+
+          &:hover {
+            background-color: #FFC700;
+          }
+        }
+      }
+    }
+  }
+}
+
+

@@ -1,0 +1,35 @@
+.mobile-app {
+  background-color: #FFC700;
+  border-radius: 20px;
+  padding: 40px 45px;
+  width: 95%;
+  margin: 0 auto;
+
+  &__container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+
+  &__text {
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+  }
+
+  &__title {
+    h2 {
+      font-size: 40px;
+      font-weight: 700;
+    }
+  }
+  &__links {
+    img {
+      margin-right: 20px;
+    }
+  }
+}
+
+
+
+
