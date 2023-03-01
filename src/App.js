@@ -19,10 +19,6 @@ function App() {
         setShowCartPopup(false)
     }
 
-
-
-
-
   return (
       <div className="wrapper">
           {showCartPopup? <CartPopup closeCart={closeCart}/> : null  }
