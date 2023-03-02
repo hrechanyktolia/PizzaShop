@@ -11,7 +11,7 @@ import {AiOutlineShopping} from "react-icons/ai";
 
 
 
-const Header = ({onClickCart}) => {
+const Header = ({showCartPopup, onClickCart}) => {
 
     const [openNumbers, setOpenNumbers] = useState(false)
 
@@ -36,30 +36,33 @@ const Header = ({onClickCart}) => {
                     </div>
                     <input type="text" placeholder='Пошук піци...'/>
                 </div>
+            <div className="header__right">
                 <div onMouseEnter={open}
-                    onMouseLeave={open}
-                     className="header__call">
+                     onMouseLeave={open}
+                     className="call">
                     <FiPhoneCall size={22}/>
                     <span>+38 (066) 151 62 98</span>
                     {openNumbers && (
-                    <div className="popup">
-                        <div className="popup__content">
-                            <ul>
-                                {numbers.map(number =>
-                                    <li key={number.phone}>
-                                        <img src={number.img} alt={number.phone}/>
-                                        <span>{number.phone}</span>
-                                    </li>
-                                )}
-                            </ul>
-                        </div>
+                        <div className="popup">
+                            <div className="popup__content">
+                                <ul>
+                                    {numbers.map(number =>
+                                        <li key={number.phone}>
+                                            <img src={number.img} alt={number.phone}/>
+                                            <span>{number.phone}</span>
+                                        </li>
+                                    )}
+                                </ul>
+                            </div>
 
-                    </div>
-                        )}
+                        </div>
+                    )}
                 </div>
-                <div className="header__cart" onClick={onClickCart}>
+                <div className="cart" onClick={onClickCart}>
                     <AiOutlineShopping size={30} style={{position:"absolute", top: 12, right: 15,}}/>
                 </div>
+            </div>
+
         </div>
     );
 };

@@ -31,10 +31,10 @@ export const socials = [
 export const required = "Це поле є обов'язковим"
 
 export const options = [
-    {value: '', city: "Виберіть місто*"},
+    {value: '', city: " Місто*"},
     {value: 'Київ', city: "Київ"},
     {value: 'Харків', city: "Харків"},
     {value: 'Львів', city: "Львів"},
     {value: 'Одеса', city: "Одеса"},
-    {value: 'Зелене', city: "с. Зелене Херсонська обл."},
+    {value: 'Зелене', city: "с.Зелене"},
 ]

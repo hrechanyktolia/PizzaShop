@@ -3,8 +3,6 @@
   padding: 20px 0;
   border-top: 1px solid #f3f3f3 ;
 
-
-
   &__container {
     display: flex;
     justify-content: space-between;
@@ -22,6 +20,15 @@
       }
       .footer__work {
         margin-left: 35px;
+      }
+    }
+
+    @media(max-width: 350px) {
+      .description {
+        flex-direction: column;
+      }
+      .footer__work {
+        margin-left: 0;
       }
     }
   }

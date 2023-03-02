@@ -1,6 +1,7 @@
 import React from 'react';
-import appStore from "../assets/image/appStore.svg";
-import playMarket from "../assets/image/playMarket.svg";
+
+import appStore from "../assets/image/appStore.png";
+import googlePlay from "../assets/image/googlePlay.png"
 import mobile from "../assets/image/mobile.png";
 
 const MobileApp = () => {
@@ -16,12 +17,12 @@ const MobileApp = () => {
                             <img width={150} src={appStore} alt="app store"/>
                         </a>
                         <a target="_blank" href="https://play.google.com/store/apps?hl=ru&gl=US&pli=1">
-                            <img width={150} src={playMarket} alt="play market"/>
+                            <img width={150} src={googlePlay} alt="play market"/>
                         </a>
                     </div>
                 </div>
                 <div className="mobile-app__image">
-                    <img width={250} src={mobile} alt="mobile phone"/>
+                    <img src={mobile} alt="mobile phone"/>
                 </div>
             </div>
         </div>

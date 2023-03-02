@@ -89,11 +89,11 @@ const Cart = () => {
     <div className="checkbox">
         <label>
             <input type="checkbox"
-                   {...register("checkbox",
-                       {
-                           required: true
-                       })}
-            />
+                           {...register("checkbox",
+                               {
+                                   required: true
+                               })}
+                    />
             <span>Згоден, з <a target="_blank" href="https://policies.google.com/?hl=uk">правилами обробки персональних даних</a>*</span>
         </label>
     </div>
