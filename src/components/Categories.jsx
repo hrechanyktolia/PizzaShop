@@ -1,21 +1,24 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {categories} from "../constants";
 
 
-const Categories = () => {
+const Categories = ({selectedCategory,onChangeCategory}) => {
 
-    const [activeIndex, setActiveIndex] = useState()
+    const handleCheckboxChange = (event, index) => {
+        if (event.target.checked) {
+            onChangeCategory(index)
+        } else {
+            onChangeCategory([])
+        }
+    };
 
-    const selectCategory = (event, index) => {
-        setActiveIndex(index)
-    }
     return (
         <div className="categories">
             {categories.map((category, index) =>
                 <label key={index} className="checkbox">
                     <input type="checkbox"
-                           onChange={(event) => selectCategory(event, index)}
-                           checked={activeIndex === index}
+                           onChange={event => handleCheckboxChange(event, index) }
+                           checked={selectedCategory === index}
                     />
                     <span>{category.title}</span>
                     <img width={24} src={category.img} alt={category.title}/>
@@ -24,5 +27,6 @@ const Categories = () => {
         </div>
     );
 };
+
 
 export default Categories;

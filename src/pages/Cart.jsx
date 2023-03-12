@@ -3,9 +3,11 @@ import {useForm, Controller } from "react-hook-form";
 import InputMask from 'react-input-mask';
 import {Link} from "react-router-dom";
 import {MdOutlineError} from "react-icons/md"
+import {useSelector} from "react-redux";
 
 import {options, required} from "../constants";
 import CartOrder from "../components/CartOrder";
+
 
 
 
@@ -26,6 +28,9 @@ import CartOrder from "../components/CartOrder";
 
 
 const Cart = () => {
+
+    const {products, totalSum} = useSelector((state) => state.cart)
+
     const {
         register,
         control,
@@ -135,21 +140,23 @@ const Cart = () => {
     <section className="order">
         <h2 className="title">Ваше замовлення</h2>
         <div className="order__pizza">
-            <div className="pizzaBlock">
-                <ul>
-                    <li>
-                        <h4>Кватро Формаджі з цибулевим мармеладом</h4>
-                        <span>x1</span>
-                    </li>
-                    <li>
-                        <p className="size">520/30cm</p>
-                        <span className="price">350 грн</span>
-                    </li>
-                </ul>
-            </div>
+            {products.map(product =>
+                <div className="pizzaBlock" key={product.id}>
+                    <ul>
+                        <li>
+                            <h4>{product.title}</h4>
+                            <span>x{product.count}</span>
+                        </li>
+                        <li>
+                            <p className="size">{product.span}</p>
+                            <span className="price">{product.price} грн</span>
+                        </li>
+                    </ul>
+                </div>
+            )}
             <div className="totalSum">
                 <h3>Всього до сплати</h3>
-                <span className="price">350 грн</span>
+                <span className="price">{totalSum} грн</span>
             </div>
             <div className={`disabled ${isValid ? 'hide' : 'show'}`}>
                 <MdOutlineError size={18} style={{color: "red", marginRight: 11}}/>

@@ -12,7 +12,12 @@ import {FaLinkedin} from "react-icons/fa";
     {id: "Морепродукти", img: "https://php.ninjapizza.com.ua/images/fishFilter.png", title: "Морепродукти"},
 ]
 
-export const sortList = ["популярністю", "алфавітом", "ціною"]
+export const sortList = [
+    {name: "популярністю", sortProperty: "-rating"},
+    {name: "алфавітом", sortProperty: "title"},
+    {name: "ціною  ↑", sortProperty: "price"},
+    {name: "ціною  ↓", sortProperty: "-price"},
+]
 
 export const typeNames = ["Традиційна", "Сирні борти"]
 

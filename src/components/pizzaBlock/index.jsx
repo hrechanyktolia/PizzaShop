@@ -1,20 +1,43 @@
 import React, {useState} from 'react';
 import {typeNames} from "../../constants";
+import {useDispatch, useSelector} from "react-redux";
+import {addProduct, plusProduct,  minusProduct, removeProduct} from "../../redux/cartSlice"
 
-const Index = ({imageUrl, title, span, body, types, price}) => {
-    const [countPizza, setCountPizza] = useState(0)
+const Index = ({id, imageUrl, title, span, body, types, price}) => {
+
     const [activeType, setActiveType] = useState(0)
 
-    const plus = () => {
-        setCountPizza(prev => prev + 1)
+    const dispatch = useDispatch()
+    const cartProduct = useSelector((state) => state.cart.products.find(obj => obj.id === id))
+    const count = cartProduct ? cartProduct.count : 0
 
+
+    const totalPrice = price[activeType]
+
+    // const onClickAdd = () => {
+    //     const product = {id, imageUrl, title, span, price: totalPrice, type: typeNames[activeType]}
+    //     dispatch(addProduct(product))
+    // }
+
+    const onClickAdd = () => {
+        const product = { id, imageUrl, title, span, type: typeNames[activeType], count: 1 };
+        product.price = price[activeType];
+
+        dispatch(addProduct(product));
+    };
+
+    const onClickPlus = () => {
+        dispatch(plusProduct(id))
     }
 
-    const minus = () => {
-        if (countPizza > 0) {
-            setCountPizza(prev => prev - 1)
+    const onClickMinus = () => {
+        if (count === 1) {
+            dispatch(removeProduct(id))
+        } else {
+            dispatch(minusProduct(id))
         }
     }
+
     return (
         <div className="pizza-block-wrapper">
             <div className="pizza-block">
@@ -41,19 +64,16 @@ const Index = ({imageUrl, title, span, body, types, price}) => {
                     </div>
                 </div>
                 <div className="pizza-block__bot">
-                    {activeType === 0
-                        ? <h2>{price[0]}<span>грн</span></h2>
-                        : <h2>{price[1]}<span>грн</span></h2>
-                    }
-                    {countPizza === 0
-                        ? <button onClick={plus} className="add">Замовити</button>
+                    <h2>{totalPrice}<span>грн</span></h2>
+                    {count === 0
+                        ? <button onClick={onClickAdd} className="add">Замовити</button>
                         : <ul>
                             <li>
-                                <button onClick={minus}>-</button>
+                                <button onClick={onClickMinus}>-</button>
                             </li>
-                            <li>{countPizza}</li>
+                            <li>{count}</li>
                             <li>
-                                <button onClick={plus}>+</button>
+                                <button onClick={onClickPlus}>+</button>
                             </li>
                         </ul>
                     }

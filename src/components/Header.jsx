@@ -1,5 +1,7 @@
-import {useState} from "react";
+import {useRef, useState} from "react";
 import {Link} from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
+import {setSearch} from "../redux/filterSlice";
 
 import pizzaLogo from "../assets/image/pizza logo.png";
 import {numbers} from "../constants";
@@ -11,13 +13,24 @@ import {AiOutlineShopping} from "react-icons/ai";
 
 
 
-const Header = ({showCartPopup, onClickCart}) => {
+const Header = ({onClickCart}) => {
 
-    const [openNumbers, setOpenNumbers] = useState(false)
+    const [openPhone, setOpenPhone] = useState(false)
+
+    const inputRef = useRef()
+
+    const search = useSelector((state) => state.filter.search)
+    const dispatch = useDispatch()
 
     const open = () => {
-        setOpenNumbers(!openNumbers)
+        setOpenPhone(!openPhone)
     }
+
+    const clearInput = () => {
+        dispatch(setSearch(''))
+        inputRef.current.focus()
+    }
+
     return (
         <div className="header">
                 <div className="header__logo">
@@ -31,10 +44,16 @@ const Header = ({showCartPopup, onClickCart}) => {
                 </div>
                 <div className="header__input">
                     <CiSearch size={17}/>
+                    {search &&
                     <div className="clearBtn">
-                        <TfiClose size={15}/>
-                    </div>
-                    <input type="text" placeholder='Пошук піци...'/>
+                        <TfiClose size={15} onClick={clearInput}/>
+                    </div>}
+                    <input
+                        ref={inputRef}
+                        value={search}
+                        onChange={e =>dispatch(setSearch(e.target.value))}
+                        type="text"
+                        placeholder='Пошук піци...'/>
                 </div>
             <div className="header__right">
                 <div onMouseEnter={open}
@@ -42,7 +61,7 @@ const Header = ({showCartPopup, onClickCart}) => {
                      className="call">
                     <FiPhoneCall size={22}/>
                     <span>+38 (066) 151 62 98</span>
-                    {openNumbers && (
+                    {openPhone && (
                         <div className="popup">
                             <div className="popup__content">
                                 <ul>
