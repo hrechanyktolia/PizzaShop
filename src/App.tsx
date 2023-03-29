@@ -1,4 +1,4 @@
-import {useState, useEffect} from "react";
+import {useEffect} from "react";
 import {Route, Routes} from "react-router-dom"
 
 import "./scss/app.scss"
@@ -9,13 +9,12 @@ import PostFooter from "./components/PostFooter";
 import Home from "./pages/Home";
 import CartPopup from "./components/CartPopup";
 import Cart from "./pages/Cart";
-
-
+import {useSelector} from "react-redux";
 
 
 function App() {
 
-    const [showCartPopup, setShowCartPopup] = useState(false)
+    const showCartPopup = useSelector((state) => state.cart.cartPopup)
 
     useEffect(() => {
         if (showCartPopup) {
@@ -28,19 +27,15 @@ function App() {
         };
     }, [showCartPopup]);
 
-    const closeCart = () => {
-        setShowCartPopup(false)
-    }
-
   return (
       <div className="wrapper">
-          {showCartPopup? <CartPopup closeCart={closeCart}/>  : null  }
-          <Header onClickCart={() => setShowCartPopup(true)} />
+          {showCartPopup? <CartPopup/>  : null  }
+          <Header/>
         <div className="content">
           <div className="container">
               <Routes>
                   <Route path="/" element={<Home/>}/>
-                  <Route path="/cart" element={<Cart/>}/>}/>
+                  <Route path="/cart" element={<Cart/>}/>
               </Routes>
           </div>
         </div>

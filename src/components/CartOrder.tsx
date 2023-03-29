@@ -2,7 +2,7 @@ import React from 'react';
 import courier from "../assets/image/courier.png"
 import {MdFileDownloadDone} from "react-icons/md"
 
-const CartOrder = () => {
+const CartOrder: React.FC = () => {
     return (
         <div className="cartOrder">
             <div className="background">

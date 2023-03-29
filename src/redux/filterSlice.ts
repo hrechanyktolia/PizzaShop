@@ -1,6 +1,18 @@
-import { createSlice } from '@reduxjs/toolkit'
+import {createSlice, PayloadAction} from '@reduxjs/toolkit'
 
-const initialState = {
+type Sort = {
+    name: string,
+    sortProperty: '-rating' | 'title' | '-price' | 'price',
+}
+
+interface IFilterSlice {
+    selectedCategory: number[];
+    sort: Sort;
+    search: string;
+}
+
+
+const initialState: IFilterSlice = {
     selectedCategory: [],
     sort: {
         name: 'популярністю',
@@ -14,13 +26,13 @@ export const filterSlice = createSlice({
     name: 'filter',
     initialState,
     reducers: {
-        setSelectedCategory: (state, action) => {
+        setSelectedCategory: (state, action: PayloadAction<number>) => {
             state.selectedCategory = action.payload
         },
-        setSort: (state, action) => {
+        setSort: (state, action: PayloadAction<Sort>) => {
             state.sort = action.payload
         },
-        setSearch: (state, action) => {
+        setSearch: (state, action: PayloadAction<string>) => {
             state.search = action.payload
         },
 
@@ -28,7 +40,6 @@ export const filterSlice = createSlice({
     },
 })
 
-// Action creators are generated for each case reducer function
 export const {setSelectedCategory, setSort, setSearch} = filterSlice.actions
 
 export default filterSlice.reducer

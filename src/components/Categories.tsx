@@ -1,10 +1,14 @@
-import React from 'react';
+import React, { ChangeEvent } from 'react';
 import {categories} from "../constants";
 
+type CategoriesProps = {
+    selectedCategory: number,
+    onChangeCategory: (index: number | number[]) => void,
+}
 
-const Categories = ({selectedCategory,onChangeCategory}) => {
+const Categories: React.FC<CategoriesProps> = ({selectedCategory,onChangeCategory}) => {
 
-    const handleCheckboxChange = (event, index) => {
+    const handleCheckboxChange = (event: ChangeEvent<HTMLInputElement>, index: number): void => {
         if (event.target.checked) {
             onChangeCategory(index)
         } else {

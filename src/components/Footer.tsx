@@ -2,7 +2,7 @@ import React from 'react';
 import logo from "../assets/image/pizza logo.png"
 import {numbers, socials} from "../constants";
 
-const Footer = () => {
+const Footer: React.FC = () => {
     return (
         <div className="footer">
             <div className="footer__container">

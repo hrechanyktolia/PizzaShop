@@ -1,7 +1,8 @@
-import {useRef, useState} from "react";
-import {Link} from "react-router-dom";
+import React, {ChangeEvent, useRef, useState} from "react";
+import {Link, useLocation} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {setSearch} from "../redux/filterSlice";
+import {toggleCartBtn} from "../redux/cartSlice";
 
 import pizzaLogo from "../assets/image/pizza logo.png";
 import {numbers} from "../constants";
@@ -13,22 +14,27 @@ import {AiOutlineShopping} from "react-icons/ai";
 
 
 
-const Header = ({onClickCart}) => {
+const Header: React.FC = () => {
 
     const [openPhone, setOpenPhone] = useState(false)
+    const location = useLocation()
 
-    const inputRef = useRef()
+    const inputRef = useRef(null)
 
     const search = useSelector((state) => state.filter.search)
     const dispatch = useDispatch()
 
-    const open = () => {
+    const open = (): void => {
         setOpenPhone(!openPhone)
     }
 
-    const clearInput = () => {
+    const clearInput = (): void => {
         dispatch(setSearch(''))
         inputRef.current.focus()
+    }
+    const changeInput = (event: ChangeEvent<HTMLInputElement>): void => {
+        console.log(event)
+        dispatch(setSearch(event.target.value))
     }
 
     return (
@@ -42,19 +48,21 @@ const Header = ({onClickCart}) => {
                         <p>Доставка по всій країні</p>
                     </div>
                 </div>
+            {location.pathname !== '/cart' &&
                 <div className="header__input">
                     <CiSearch size={17}/>
                     {search &&
-                    <div className="clearBtn">
-                        <TfiClose size={15} onClick={clearInput}/>
-                    </div>}
+                        <div className="clearBtn">
+                            <TfiClose size={15} onClick={clearInput}/>
+                        </div>}
                     <input
                         ref={inputRef}
                         value={search}
-                        onChange={e =>dispatch(setSearch(e.target.value))}
+                        onChange={changeInput}
                         type="text"
                         placeholder='Пошук піци...'/>
                 </div>
+            }
             <div className="header__right">
                 <div onMouseEnter={open}
                      onMouseLeave={open}
@@ -77,7 +85,7 @@ const Header = ({onClickCart}) => {
                         </div>
                     )}
                 </div>
-                <div className="cart" onClick={onClickCart}>
+                <div className="cart" onClick={() => dispatch(toggleCartBtn(true))}>
                     <AiOutlineShopping size={30} style={{position:"absolute", top: 12, right: 15,}}/>
                 </div>
             </div>

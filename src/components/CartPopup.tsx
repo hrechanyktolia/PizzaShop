@@ -2,15 +2,21 @@ import React from 'react';
 import {Link} from "react-router-dom";
 import {TfiClose} from "react-icons/tfi";
 import {useDispatch, useSelector} from "react-redux";
-import {plusProduct, minusProduct, removeProduct} from "../redux/cartSlice";
+import {addProduct,  minusProduct, removeProduct, toggleCartBtn} from "../redux/cartSlice";
 
 import CartEmptyPopup from "./CartEmptyPopup";
 
 
-const CartPopup = ({closeCart}) => {
+const CartPopup: React.FC = () => {
 
     const {products, totalSum} = useSelector((state) => state.cart)
     const dispatch = useDispatch()
+
+    const closeCart = (): void => dispatch(toggleCartBtn(false))
+
+    const handleAddProduct = (product: any): void => {
+        dispatch(addProduct(product));
+    };
 
     return (
     <div className="overlay" onClick={closeCart}>
@@ -23,7 +29,7 @@ const CartPopup = ({closeCart}) => {
                         <TfiClose onClick={closeCart} size={15} style={{cursor: "pointer"}}/>
                     </div>
                     {products.map(product =>
-                        <div className="cartItem" key={product.id}>
+                        <div className="cartItem" key={`${product.id}_${product.type}`}>
                             <div className="cartItem__product">
                                 <button className="remove" onClick={() => dispatch(removeProduct(product.id))}>x</button>
                                 <img width={75} height={75}
@@ -42,7 +48,7 @@ const CartPopup = ({closeCart}) => {
                                             </li>
                                             <li>{product.count}</li>
                                             <li>
-                                                <button className="plusItem" onClick={() => dispatch(plusProduct(product.id))} >+</button>
+                                                <button className="plusItem" onClick={() => handleAddProduct(product)} >+</button>
                                             </li>
                                         </ul>
                                     </div>
@@ -65,7 +71,7 @@ const CartPopup = ({closeCart}) => {
                     </div>
                 </>
                : <>
-                    <CartEmptyPopup closeCart={closeCart}/>
+                    <CartEmptyPopup/>
                 </>
             }
         </div>

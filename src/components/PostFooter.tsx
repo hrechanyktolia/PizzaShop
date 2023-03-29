@@ -1,6 +1,6 @@
 import React from 'react';
 
-const PostFooter = () => {
+const PostFooter: React.FC = () => {
     return (
         <div className="ninja-pizza">
             <div className="ninja-pizza__text">

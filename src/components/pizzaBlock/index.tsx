@@ -1,9 +1,19 @@
 import React, {useState} from 'react';
 import {typeNames} from "../../constants";
 import {useDispatch, useSelector} from "react-redux";
-import {addProduct, plusProduct,  minusProduct, removeProduct} from "../../redux/cartSlice"
+import {addProduct, CartProducts, minusProduct, removeProduct} from "../../redux/cartSlice"
 
-const Index = ({id, imageUrl, title, span, body, types, price}) => {
+type ProductsProps = {
+    id: number,
+    imageUrl: string,
+    title: string,
+    span: string,
+    body: string,
+    types: number[],
+    price: number[],
+}
+
+const Index: React.FC<ProductsProps> = ({id, imageUrl, title, span, body, types, price}) => {
 
     const [activeType, setActiveType] = useState(0)
 
@@ -11,26 +21,15 @@ const Index = ({id, imageUrl, title, span, body, types, price}) => {
     const cartProduct = useSelector((state) => state.cart.products.find(obj => obj.id === id))
     const count = cartProduct ? cartProduct.count : 0
 
-
     const totalPrice = price[activeType]
 
-    // const onClickAdd = () => {
-    //     const product = {id, imageUrl, title, span, price: totalPrice, type: typeNames[activeType]}
-    //     dispatch(addProduct(product))
-    // }
 
-    const onClickAdd = () => {
-        const product = { id, imageUrl, title, span, type: typeNames[activeType], count: 1 };
-        product.price = price[activeType];
-
-        dispatch(addProduct(product));
-    };
-
-    const onClickPlus = () => {
-        dispatch(plusProduct(id))
+    const handleAddProduct = (): void => {
+        const product:CartProducts = {id, imageUrl, title, span, price: totalPrice, type: typeNames[activeType]}
+        dispatch(addProduct(product))
     }
 
-    const onClickMinus = () => {
+    const onClickMinus = (): void => {
         if (count === 1) {
             dispatch(removeProduct(id))
         } else {
@@ -66,14 +65,14 @@ const Index = ({id, imageUrl, title, span, body, types, price}) => {
                 <div className="pizza-block__bot">
                     <h2>{totalPrice}<span>грн</span></h2>
                     {count === 0
-                        ? <button onClick={onClickAdd} className="add">Замовити</button>
+                        ? <button onClick={handleAddProduct} className="add">Замовити</button>
                         : <ul>
                             <li>
                                 <button onClick={onClickMinus}>-</button>
                             </li>
                             <li>{count}</li>
                             <li>
-                                <button onClick={onClickPlus}>+</button>
+                                <button onClick={handleAddProduct}>+</button>
                             </li>
                         </ul>
                     }

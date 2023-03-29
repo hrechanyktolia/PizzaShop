@@ -4,7 +4,7 @@ import appStore from "../assets/image/appStore.png";
 import googlePlay from "../assets/image/googlePlay.png"
 import mobile from "../assets/image/mobile.png";
 
-const MobileApp = () => {
+const MobileApp: React.FC = () => {
     return (
         <div className="mobile-app">
             <div className="mobile-app__container">

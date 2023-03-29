@@ -1,5 +1,5 @@
-import {useState} from "react";
-import {useForm, Controller } from "react-hook-form";
+import React, {useState} from "react";
+import {useForm, Controller, SubmitHandler} from "react-hook-form";
 import InputMask from 'react-input-mask';
 import {Link} from "react-router-dom";
 import {MdOutlineError} from "react-icons/md"
@@ -9,25 +9,20 @@ import {options, required} from "../constants";
 import CartOrder from "../components/CartOrder";
 
 
+interface IAddress {
+    city: string,
+    street: string,
+    house: number,
+}
+interface IShippingFields {
+    name: string,
+    phone: string,
+    checkbox: boolean,
+    address: IAddress
+}
 
 
-// interface IAddress {
-//     city: string
-//     street: string
-//     house: number
-// }
-//
-// interface IShippingFields {
-//     name: string
-//     phone: number
-//     address: IAddress
-// }
-
-
-
-
-
-const Cart = () => {
+const Cart: React.FC = () => {
 
     const {products, totalSum} = useSelector((state) => state.cart)
 
@@ -35,9 +30,9 @@ const Cart = () => {
         register,
         control,
         handleSubmit,
-        formState: {errors, isValid}, reset } = useForm({
+        formState: {errors, isValid}, reset } = useForm<IShippingFields>({
         defaultValues: {
-            phone: '',
+            phone: '' ,
         },
         mode: "onChange",
 
@@ -45,7 +40,7 @@ const Cart = () => {
 
     const [orderComplete, setOrderComplete] = useState(true)
 
-    const onSubmit = data => {
+    const onSubmit: SubmitHandler<IShippingFields> = (data: IShippingFields) => {
         console.log(data)
         reset()
         setOrderComplete(!orderComplete)
@@ -106,7 +101,7 @@ const Cart = () => {
     <div className="checkout__receive">
         <h2 className="title">Доставка</h2>
         <select
-            {...register("city",
+            {...register("address.city",
                 {
                     required: true
                 })}>
@@ -117,23 +112,23 @@ const Cart = () => {
         <div className="item">
             <label><span>Вулиця*</span></label>
             <input placeholder="Вулиця"
-                   {...register("street",
+                   {...register("address.street",
                        {
                            required: required
                        }
                    )}/>
-            {errors?.street && <p className="error">{errors.street.message}</p>}
+            {errors?.address?.street && <p className="error">{errors.address.street.message}</p>}
         </div>
 
         <div className="item">
             <label><span>Будинок*</span></label>
             <input placeholder="Номер будинку чи квартири"
-                   {...register("house",
+                   {...register("address.house",
                        {
                            required: required
                        }
                    )}/>
-            {errors?.house && <p className="error">{errors.house.message}</p>}
+            {errors?.address?.house && <p className="error">{errors.address.house.message}</p>}
         </div>
     </div>
 </section>

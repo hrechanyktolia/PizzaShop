@@ -10,9 +10,9 @@
 .drawer {
   display: flex;
   flex-direction: column;
-  position: absolute;
   width: 420px;
   height: 100%;
+  position: absolute;
   top: 0;
   right: 0;
   background: #f6eaff;
@@ -21,7 +21,8 @@
   overflow-y: hidden;
 
   @media(min-width: 1550px) {
-    right: 10%;
+    height: 70%;
+    width: 600px
   }
 
   @media(max-width: 600px) {

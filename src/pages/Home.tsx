@@ -1,7 +1,8 @@
 import React from 'react';
-import {useEffect, useState} from "react";
+import {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {setSelectedCategory} from "../redux/filterSlice";
+import {setSelectedCategory} from "../redux/filterSlice"
+import {fetchPizza, setPizzaItems} from "../redux/pizzaSlice";
 
 import Categories from "../components/Categories";
 import Sort from "../components/Sort";
@@ -12,31 +13,30 @@ import Index from "../components/pizzaBlock";
 
 const Home = () => {
 
-    const [pizzaItem, setPizzaItem] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
-
     const {sort, selectedCategory, search} = useSelector((state) => state.filter)
+    const {products, loading} = useSelector((state) => state.pizza)
+
     const dispatch = useDispatch()
 
-    const onChangeCategory = (id) => {
-        dispatch(setSelectedCategory(id))
+    const onChangeCategory = (index: number): void => {
+        dispatch(setSelectedCategory(index))
     }
 
-    useEffect(() => {
-        setIsLoading(true)
+    const getPizza = async () => {
+
         const order = sort.sortProperty.includes('-') ? 'desc' : 'asc'
         const sortBy = sort.sortProperty.replace('-', '')
 
-        fetch(`https://63a4bd1f2a73744b007f13dd.mockapi.io/pizzaItems?category=${selectedCategory}&sortBy=${sortBy}&order=${order}`)
-            .then(response => response.json())
-            .then(arr => {
-                    setPizzaItem(arr)
-                    setIsLoading(false)
-            })
+        dispatch(fetchPizza({ order, sortBy, selectedCategory }))
+    }
+
+    useEffect(() => {
+       getPizza()
     }, [selectedCategory, sort.sortProperty])
 
+
     const skeleton = [...new Array(6)].map((_, i) => <Skeleton key={i}/>)
-    const pizza = pizzaItem.filter(obj => {
+    const pizza = products.filter(obj => {
         if (obj.title.toLowerCase().includes(search.toLowerCase())) {
             return true
         }
@@ -50,14 +50,22 @@ const Home = () => {
                 <Sort/>
             </div>
             <h2 className="content__title">Піци</h2>
-            <div className="content__items">
-                {isLoading
-                    ? skeleton
-                    : pizza
-                }
-            </div>
+            {loading === 'failed' ?
+                <div style={{fontSize: '30px'}}>Виникла помилка на сервері! Повторіть запит)</div> :
+                <div className="content__items">
+                    {loading === 'pending'
+                        ? skeleton
+                        : pizza
+                    }
+                </div>
+            }
         </>
     );
 };
 
 export default Home;
+
+
+
+
+

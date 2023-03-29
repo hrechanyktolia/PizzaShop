@@ -1,26 +1,26 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 
-import {sortList} from "../constants";
+import {sortList, SortList} from "../constants";
 import {setSort} from "../redux/filterSlice";
 
 
 
-const Sort = () => {
+const Sort: React.FC = () => {
     const [popup, setPopup] = useState(false)
-    const sortRef = useRef()
+    const sortRef = useRef(null)
 
     const sort = useSelector((state) => state.filter.sort)
     const dispatch = useDispatch()
 
 
-    const selectedSort = (obj) => {
+    const selectedSort = (obj: SortList) => {
         dispatch(setSort(obj))
         setPopup(false)
     }
 
-    const clickOutside = (event) => {
-        if (!sortRef.current.contains(event.target)) {
+    const clickOutside = (event: Event): void => {
+        if (!sortRef.current.contains(event.target as Node)) {
             setPopup(false);
         }
     };
@@ -31,6 +31,7 @@ const Sort = () => {
             document.body.removeEventListener("click", clickOutside);
         };
     }, []);
+
 
     return (
         <div className="sort" ref={sortRef}>
